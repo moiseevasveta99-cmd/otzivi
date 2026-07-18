@@ -1,7 +1,7 @@
 const LINKS = {
-  group: "#",
-  manager: "#",
-  owner: "#",
+  group: "https://t.me/+gQrkd_lUbzlkNTMy",
+  manager: "https://t.me/netprofittttt",
+  owner: "https://t.me/m/QJClCOYiMmYy",
 };
 
 function initShapeGrid(canvas) {
