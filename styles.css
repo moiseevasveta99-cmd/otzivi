@@ -1123,6 +1123,12 @@ p {
   margin-bottom: 0;
 }
 
+.faq-side {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
 .faq-scroll-panel {
   max-height: 540px;
   position: relative;
@@ -1180,6 +1186,82 @@ p {
 .faq-list::-webkit-scrollbar-thumb {
   background: rgba(0, 255, 102, 0.32);
   border-radius: 999px;
+}
+
+.faq-ask-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  overflow: hidden;
+  padding: 18px 20px;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, rgba(15, 42, 31, 0.42), rgba(23, 23, 23, 0.98) 44%),
+    linear-gradient(180deg, rgba(18, 18, 18, 0.98), rgba(10, 10, 10, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.faq-ask-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--primary);
+  opacity: 0.78;
+}
+
+.faq-ask-card__mark {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(0, 255, 102, 0.22);
+  border-radius: 8px;
+  background: rgba(15, 42, 31, 0.54);
+  color: var(--primary);
+  font-family: "Oswald", sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 500;
+  transition:
+    transform 260ms ease,
+    background 260ms ease,
+    border-color 260ms ease;
+}
+
+.faq-ask-card__content {
+  min-width: 0;
+}
+
+.faq-ask-card h3 {
+  margin: 0;
+  color: var(--text);
+  font-family: "Onest", sans-serif;
+  font-size: clamp(1.24rem, 1.7vw, 1.52rem);
+  font-weight: 620;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.faq-ask-card p {
+  max-width: 54ch;
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.faq-ask-card .button {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.faq-ask-card:hover .faq-ask-card__mark {
+  transform: rotate(-5deg) scale(1.04);
+  border-color: rgba(0, 255, 102, 0.38);
+  background: rgba(15, 42, 31, 0.72);
 }
 
 .faq-item {
@@ -1629,6 +1711,15 @@ p {
     max-height: none;
   }
 
+  .faq-ask-card {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .faq-ask-card .button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
   .line-sidebar {
     margin-top: 28px;
   }
@@ -1715,6 +1806,21 @@ p {
 
   .faq-scroll-panel {
     padding: 6px 14px 6px 16px;
+  }
+
+  .faq-ask-card {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .faq-ask-card__mark {
+    width: 42px;
+    height: 42px;
+    font-size: 1.78rem;
+  }
+
+  .faq-ask-card h3 {
+    font-size: clamp(1.18rem, 5.6vw, 1.38rem);
   }
 
   .faq-list {
