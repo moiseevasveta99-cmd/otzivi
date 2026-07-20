@@ -39,6 +39,10 @@ body {
   scroll-behavior: smooth;
 }
 
+body.is-video-modal-open {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -1109,6 +1113,207 @@ p {
   line-height: 1.58;
 }
 
+.section--video {
+  padding-top: 0;
+}
+
+.video-instruction-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.62fr) minmax(0, 1.38fr);
+  gap: 28px;
+  align-items: center;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at 96% 8%, rgba(0, 255, 102, 0.12), transparent 30%),
+    linear-gradient(135deg, rgba(15, 42, 31, 0.28), rgba(23, 23, 23, 0.96) 38%, rgba(11, 11, 11, 0.98));
+}
+
+.video-instruction-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--primary);
+  opacity: 0.7;
+}
+
+.video-instruction-card__content {
+  position: relative;
+  z-index: 1;
+}
+
+.video-instruction-card__content h2 {
+  margin: 18px 0 0;
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(2.2rem, 4.6vw, 4.4rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.video-instruction-card__content p:not(.eyebrow) {
+  max-width: 46ch;
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 1rem;
+  line-height: 1.58;
+}
+
+.video-instruction-preview {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    radial-gradient(circle at 70% 22%, rgba(0, 255, 102, 0.12), transparent 34%),
+    #050505;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.video-instruction-preview video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 70vh;
+  background: #050505;
+  object-fit: contain;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.video-instruction-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, transparent 0%, transparent 34%, rgba(0, 0, 0, 0.34) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.42));
+  pointer-events: none;
+}
+
+.video-instruction-preview__play {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: clamp(62px, 8vw, 92px);
+  height: clamp(62px, 8vw, 92px);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 255, 102, 0.36);
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.16), transparent 30%),
+    rgba(15, 42, 31, 0.78);
+  transform: translate(-50%, -50%);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease;
+}
+
+.video-instruction-preview__play::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 53%;
+  width: 0;
+  height: 0;
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  border-left: 19px solid var(--primary);
+  transform: translate(-50%, -50%);
+}
+
+.video-instruction-preview__label {
+  position: absolute;
+  z-index: 2;
+  left: 18px;
+  bottom: 16px;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: "Oswald", sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.video-instruction-preview:hover .video-instruction-preview__play {
+  transform: translate(-50%, -50%) scale(1.05);
+  border-color: rgba(0, 255, 102, 0.6);
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.18), transparent 30%),
+    rgba(15, 42, 31, 0.92);
+}
+
+.video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 220ms ease,
+    visibility 220ms ease;
+}
+
+.video-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.video-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.video-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1100px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #050505;
+  overflow: hidden;
+}
+
+.video-modal__player {
+  display: block;
+  width: 100%;
+  max-height: min(78vh, 760px);
+  background: #050505;
+}
+
+.video-modal__close {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(11, 11, 11, 0.82);
+  color: #ffffff;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
 .step-card {
   display: grid;
   grid-template-columns: 88px minmax(0, 1fr);
@@ -1889,12 +2094,21 @@ p {
   }
 
   .faq-scroll-panel {
-    max-height: none;
+    max-height: min(620px, 72vh);
     padding: 8px 18px 8px 20px;
   }
 
   .faq-list {
-    max-height: none;
+    max-height: calc(min(620px, 72vh) - 16px);
+  }
+
+  .video-instruction-card {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .video-instruction-card__content h2 {
+    max-width: 100%;
   }
 
   .faq-ask-card {
@@ -2018,6 +2232,7 @@ p {
   }
 
   .faq-scroll-panel {
+    max-height: min(560px, 70vh);
     padding: 6px 14px 6px 16px;
   }
 
@@ -2038,7 +2253,7 @@ p {
 
   .faq-list {
     gap: 12px;
-    max-height: none;
+    max-height: calc(min(560px, 70vh) - 12px);
     padding-right: 4px;
   }
 
@@ -2090,6 +2305,41 @@ p {
 
   .instruction-panel {
     padding: 22px 22px 18px;
+  }
+
+  .section--video {
+    padding-top: 0;
+  }
+
+  .video-instruction-card {
+    padding: 18px;
+  }
+
+  .video-instruction-card__content h2 {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .video-instruction-card__content p:not(.eyebrow) {
+    font-size: 0.95rem;
+  }
+
+  .video-instruction-preview {
+    border-radius: 8px;
+  }
+
+  .video-modal {
+    padding: 12px;
+  }
+
+  .video-modal__dialog {
+    border-radius: 8px;
+  }
+
+  .video-modal__close {
+    top: 8px;
+    right: 8px;
+    width: 34px;
+    height: 34px;
   }
 
   .instruction-panel__meta {

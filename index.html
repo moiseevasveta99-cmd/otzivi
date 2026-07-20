@@ -190,6 +190,40 @@
           </div>
         </section>
 
+        <section class="section section--video reveal-on-scroll" aria-labelledby="video-instruction-title">
+          <div class="container">
+            <div class="video-instruction-card">
+              <div class="video-instruction-card__content">
+                <p class="eyebrow">Наглядный старт</p>
+                <h2 id="video-instruction-title">Инструкция</h2>
+                <p>
+                  Короткое видео поможет быстрее сориентироваться: где смотреть задания,
+                  как получить ссылку и что делать перед первым отзывом.
+                </p>
+              </div>
+
+              <button class="video-instruction-preview" type="button" data-video-open aria-label="Открыть видео-инструкцию">
+                <video preload="metadata" muted playsinline aria-hidden="true">
+                  <source src="assets/videos/instruction.mp4" type="video/mp4" />
+                </video>
+                <span class="video-instruction-preview__play" aria-hidden="true"></span>
+                <span class="video-instruction-preview__label">Смотреть инструкцию</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <div class="video-modal" data-video-modal aria-hidden="true">
+          <div class="video-modal__backdrop" data-video-close></div>
+          <div class="video-modal__dialog" role="dialog" aria-modal="true" aria-label="Видео-инструкция">
+            <button class="video-modal__close" type="button" data-video-close aria-label="Закрыть видео">×</button>
+            <video class="video-modal__player" controls preload="metadata" playsinline>
+              <source src="assets/videos/instruction.mp4" type="video/mp4" />
+              Ваш браузер не поддерживает встроенное видео. Откройте файл instruction.mp4 в папке assets/videos.
+            </video>
+          </div>
+        </div>
+
         <section class="section reveal-on-scroll" id="reviews">
           <div class="container">
             <div class="section-heading reviews-heading reviews-heading--animated">

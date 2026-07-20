@@ -688,6 +688,43 @@ document.querySelectorAll("[data-link]").forEach((element) => {
   }
 });
 
+const videoModal = document.querySelector("[data-video-modal]");
+const videoOpenButton = document.querySelector("[data-video-open]");
+const videoPlayer = videoModal?.querySelector(".video-modal__player");
+
+function closeVideoModal() {
+  if (!videoModal) {
+    return;
+  }
+
+  videoModal.classList.remove("is-open");
+  videoModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("is-video-modal-open");
+
+  if (videoPlayer) {
+    videoPlayer.pause();
+  }
+}
+
+if (videoModal && videoOpenButton && videoPlayer) {
+  videoOpenButton.addEventListener("click", () => {
+    videoModal.classList.add("is-open");
+    videoModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("is-video-modal-open");
+    videoPlayer.play().catch(() => {});
+  });
+
+  videoModal.querySelectorAll("[data-video-close]").forEach((button) => {
+    button.addEventListener("click", closeVideoModal);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && videoModal.classList.contains("is-open")) {
+      closeVideoModal();
+    }
+  });
+}
+
 const revealNodes = document.querySelectorAll(".reveal-on-scroll:not(.is-visible)");
 
 if ("IntersectionObserver" in window && revealNodes.length > 0) {
