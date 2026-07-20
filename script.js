@@ -1,5 +1,6 @@
 const LINKS = {
   group: "https://t.me/+gQrkd_lUbzlkNTMy",
+  channel: "https://t.me/+bXuSPMG4UsEwN2Fi",
   manager: "https://t.me/netprofittttt",
   owner: "https://t.me/m/QJClCOYiMmYy",
 };
@@ -466,6 +467,42 @@ function initMagnet(wrapper) {
   wrapper.addEventListener("mouseleave", resetMagnet);
 }
 
+function initSpecularButton(button) {
+  if (!button) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (prefersReducedMotion) {
+    button.style.setProperty("--specular-opacity", "0.22");
+    return;
+  }
+
+  const proximity = Number(button.dataset.proximity) || 190;
+
+  function updateLight(event) {
+    const rect = button.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const localX = ((event.clientX - rect.left) / rect.width) * 100;
+    const localY = ((event.clientY - rect.top) / rect.height) * 100;
+    const dx = Math.max(rect.left - event.clientX, 0, event.clientX - rect.right);
+    const dy = Math.max(rect.top - event.clientY, 0, event.clientY - rect.bottom);
+    const distance = Math.hypot(dx, dy);
+    const raw = Math.max(0, 1 - distance / proximity);
+    const strength = raw * raw * (3 - 2 * raw);
+    const angle = (Math.atan2(event.clientY - centerY, event.clientX - centerX) * 180) / Math.PI + 90;
+
+    button.style.setProperty("--specular-x", `${Math.max(0, Math.min(100, localX)).toFixed(1)}%`);
+    button.style.setProperty("--specular-y", `${Math.max(0, Math.min(100, localY)).toFixed(1)}%`);
+    button.style.setProperty("--specular-rotate", `${angle.toFixed(1)}deg`);
+    button.style.setProperty("--specular-opacity", (0.22 + strength * 0.62).toFixed(3));
+  }
+
+  window.addEventListener("pointermove", updateLight, { passive: true });
+}
+
 function initLineSidebar(sidebar) {
   if (!sidebar) {
     return;
@@ -596,14 +633,14 @@ function wrapDigitsWithOswald(root = document.body) {
 
   textNodes.forEach((node) => {
     const fragment = document.createDocumentFragment();
-    const parts = node.nodeValue.split(/(\d+)/);
+    const parts = node.nodeValue.split(/(\d+(?:[.,]\d+)*)/);
 
     parts.forEach((part) => {
       if (!part) {
         return;
       }
 
-      if (/^\d+$/.test(part)) {
+      if (/^\d+(?:[.,]\d+)*$/.test(part)) {
         const span = document.createElement("span");
         span.className = "oswald-digit";
         span.textContent = part;
@@ -629,6 +666,10 @@ document.querySelectorAll("[data-magic-bento]").forEach((container) => {
 
 document.querySelectorAll("[data-magnet]").forEach((wrapper) => {
   initMagnet(wrapper);
+});
+
+document.querySelectorAll("[data-specular-button]").forEach((button) => {
+  initSpecularButton(button);
 });
 
 document.querySelectorAll("[data-line-sidebar]").forEach((sidebar) => {
