@@ -1,4 +1,4 @@
-const LINKS = {
+﻿const LINKS = {
   group: "https://t.me/+gQrkd_lUbzlkNTMy",
   channel: "https://t.me/+bXuSPMG4UsEwN2Fi",
   manager: "https://t.me/netprofittttt",
